@@ -1,3 +1,4 @@
+import store from '@/store'
 import axios from 'axios'
 import md5 from 'md5'
 
@@ -12,6 +13,10 @@ service.interceptors.request.use(
     const { icode, time } = getTestICode()
     config.headers.icode = icode
     config.headers.codeType = time
+
+    if(store.getters.token) {
+      config.headers.Authorization = `Bearer ${store.getters.token}`
+    }
     return config // 必须返回配置
   },
   error => {

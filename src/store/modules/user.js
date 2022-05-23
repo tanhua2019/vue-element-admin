@@ -1,15 +1,19 @@
-import { login } from '@/api/login'
+import { login, getUserInfo } from '@/api/user'
 import md5 from 'md5'
 
 export default {
   namespaced: true,
   state: {
-    token: sessionStorage.getItem('token') || ''
+    token: sessionStorage.getItem('token') || '',
+    userInfo: {}
   },
   mutations: {
     setToken(state, payload) {
       state.token = payload
       sessionStorage.setItem('token', payload)
+    },
+    setUserInfo(state, payload) {
+      state.userInfo = payload
     }
   },
   actions: {
@@ -28,6 +32,11 @@ export default {
             reject(err)
           })
       })
+    },
+    async getUserInfo({ commit }) {
+      const res = await getUserInfo()
+      commit('setUserInfo', res.data.data)
+      return res
     }
   }
 }
