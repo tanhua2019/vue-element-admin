@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form">
+    <el-form class="login-form" :mode="form" :rules="rules">
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
@@ -9,20 +9,33 @@
         <span class="svg-container">
           <svg-icon icon="user" />
         </span>
-        <el-input placeholder="username" name="username" type="text" />
+        <el-input
+          v-model="form.username"
+          placeholder="username"
+          name="username"
+          type="text"
+        />
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon="password" />
         </span>
-        <el-input placeholder="password" name="password" />
+        <el-input
+          v-model="form.password"
+          placeholder="password"
+          name="password"
+          :type="pwdType"
+        />
         <span class="show-pwd">
-          <svg-icon icon="eye" />
+          <svg-icon
+            :icon="pwdType == 'password' ? 'eye' : 'eye-open'"
+            @click="handlePwdType"
+          />
         </span>
       </el-form-item>
 
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px"
+      <el-button type="primary" :loading="loading" @click="login"
         >登录</el-button
       >
     </el-form>
@@ -30,7 +43,61 @@
 </template>
 
 <script setup>
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
+const checkPassword = (rule, value, callback) => {
+  if (value.length < 6) {
+    callback(new Error('密码不能少于6位'))
+  } else {
+    callback()
+  }
+}
+
+const form = ref({
+  username: 'super-admin',
+  password: '123456'
+})
+
+const rules = ref({
+  username: [
+    {
+      required: true,
+      message: '用户名不能为空',
+      trigger: 'blur'
+    }
+  ],
+  password: [
+    {
+      required: true,
+      message: '用户名不能为空',
+      validator: checkPassword
+    }
+  ]
+})
+
+const pwdType = ref('password')
+const handlePwdType = () => {
+  pwdType.value = pwdType.value === 'password' ? 'text' : 'password'
+}
+
+const store = useStore()
+const loading = ref(false)
+const router = useRouter()
+
+const login = () => {
+  loading.value = true
+  store
+    .dispatch('user/login', form.value)
+    .then(() => {
+      loading.value = false
+      router.push('/')
+    })
+    .catch(() => {
+      loading.value = false
+    })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -110,6 +177,10 @@ $cursor: #fff;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  .el-button {
+    width: 100%;
+    margin-bottom: 30px;
   }
 }
 </style>

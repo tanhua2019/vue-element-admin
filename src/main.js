@@ -12,4 +12,7 @@ const app = createApp(App)
 
 installIcons(app)
 
+// 导入路由鉴权
+import './permission'
+
 app.use(ElementPlus).use(store).use(router).mount('#app')
