@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper">
+  <div class="app-wrapper" :class="[$store.getters.sidebarOpened ? 'openSidebar' : 'hideSidebar']">
     <sidebar
       class="sidebar-container"
       :style="{ backgroundColor: variables.menuBg }"
@@ -29,6 +29,10 @@ import variables from '@/styles/variables.module.scss'
   position: relative;
   height: 100%;
   width: 100%;
+}
+
+.hideSidebar .fixed-header {
+  width: calc(100% - #{$hideSideBarWidth});
 }
 
 .fixed-header {
