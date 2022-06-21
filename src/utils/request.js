@@ -1,6 +1,8 @@
 import store from '@/store'
 import axios from 'axios'
 import md5 from 'md5'
+import { isTimeOut } from '@/utils/loginTime'
+import { ElMessage } from 'element-plus'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -14,12 +16,31 @@ service.interceptors.request.use(
     config.headers.icode = icode
     config.headers.codeType = time
 
-    if(store.getters.token) {
+    if (store.getters.token) {
       config.headers.Authorization = `Bearer ${store.getters.token}`
+      // 用户被动退出主动处理
+      if (isTimeOut()) {
+        store.commit('user/loginOut')
+        ElMessage.error('token 失效')
+        return Promise.reject(new Error('token 失效'))
+      }
     }
     return config // 必须返回配置
   },
   error => {
+    return Promise.reject(error)
+  }
+)
+
+// 相应拦截器
+service.interceptors.response.use(
+  () => {},
+  error => {
+    // 用户被动退出被动处理： token过期、单点登录
+    if (error.response?.data?.code === 401) {
+      store.commit('user/loginOut')
+    }
+    ElMessage.error(error.message) // 提示错误信息
     return Promise.reject(error)
   }
 )

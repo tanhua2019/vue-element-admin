@@ -6,18 +6,17 @@
           <el-avatar
             shape="square"
             :size="40"
-            :src="$store.getters.userInfo.avatar"
-          ></el-avatar>
-          <i class="el-icon-s-tools"></i>
+            src="https://resource-test.yixueniuniu.com/msUserFile/16472489368802e37a893.jpg"
+          />
         </div>
         <template #dropdown>
           <el-dropdown-menu class="user-dropdown">
             <router-link to="/">
               <el-dropdown-item> 首页 </el-dropdown-item>
             </router-link>
-            <a target="_blank" href="">
-              <el-dropdown-item>课程主页</el-dropdown-item>
-            </a>
+            <router-link to="/">
+              <el-dropdown-item> 课程主页 </el-dropdown-item>
+            </router-link>
             <el-dropdown-item divided @click="logout">
               退出登录
             </el-dropdown-item>
@@ -30,15 +29,10 @@
 
 <script setup>
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 
 const store = useStore()
-const router = useRouter()
 const logout = () => {
-  store.commit('user/setToken', '')
-  store.commit('user/setUserInfo', {})
-  sessionStorage.clear()
-  router.push('/login')
+  store.commit('user/loginOut')
 }
 </script>
 
@@ -58,14 +52,7 @@ const logout = () => {
 
     :deep(.avatar-container) {
       cursor: pointer;
-      .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
-        .el-avatar {
-          --el-avatar-background-color: none;
-          margin-right: 12px;
-        }
-      }
+      margin-top: 5px;
     }
   }
 }

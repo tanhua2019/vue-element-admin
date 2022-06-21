@@ -1,5 +1,7 @@
 import { login, getUserInfo } from '@/api/user'
+import { setTimeStamp } from '@/utils/loginTime'
 import md5 from 'md5'
+import router from '@/router'
 
 export default {
   namespaced: true,
@@ -14,6 +16,12 @@ export default {
     },
     setUserInfo(state, payload) {
       state.userInfo = payload
+    },
+    loginOut(state) {
+      state.token = ''
+      state.userInfo = {}
+      sessionStorage.clear()
+      router.push('/login')
     }
   },
   actions: {
@@ -25,6 +33,7 @@ export default {
           password: md5(password)
         })
           .then(res => {
+            setTimeStamp()
             commit('setToken', res.data.data.token)
             resolve(res)
           })
