@@ -1,6 +1,7 @@
 <template>
   <div class="navbar">
-    <Hamburger class="hamburger-container"></Hamburger>
+    <Hamburger class="hamburger-container" />
+    <Breadcrumb />
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -30,6 +31,7 @@
 
 <script setup>
 import Hamburger from '@/components/hamburger'
+import Breadcrumb from '@/components/Breadcrumb'
 import { useStore } from 'vuex'
 
 const store = useStore()

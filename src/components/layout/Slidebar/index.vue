@@ -1,6 +1,16 @@
 <template>
   <div class="">
-    <h1>qq</h1>
+    <div class="logo-container">
+      <h1 class="logo-title" v-if="$store.getters.sidebarOpened">
+        Vue3-elementPlus-admin
+      </h1>
+      <el-avatar
+        v-else
+        :size="logoHeight"
+        shape="square"
+        src="https://img1.baidu.com/it/u=2789679700,1324273936&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
+      />
+    </div>
     <el-scrollbar>
       <el-menu
         :background-color="$store.getters.variables.menuBg"
@@ -26,6 +36,7 @@ import sidebarItem from './SidebarItem.vue'
 import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { filterRouters, menuList } from '@/utils/route'
+const logoHeight = 44
 
 const router = useRouter()
 const routes = computed(() => {
@@ -40,4 +51,19 @@ const activeMenu = computed(() => {
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.logo-container {
+  height: v-bind(logoHeight) + 'px';
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .logo-title {
+    color: #fff;
+    font-weight: 600;
+    line-height: 50px;
+    font-size: 16px;
+    white-space: nowrap;
+  }
+}
+</style>
