@@ -18,7 +18,6 @@ import sidebar from './Slidebar'
 import appMain from './AppMain.vue'
 import navbar from './Navbar.vue'
 import variables from '@/styles/variables.module.scss'
-console.log(variables);
 </script>
 
 <style lang="scss" scoped>

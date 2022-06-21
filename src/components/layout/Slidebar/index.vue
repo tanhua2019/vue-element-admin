@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <h1>zhhaa</h1>
+    <h1>qq</h1>
     <el-scrollbar>
       <el-menu
         :background-color="$store.getters.variables.menuBg"
@@ -24,21 +24,19 @@
 import sidebarItem from './SidebarItem.vue'
 import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { filterRouters, generateMenus } from '@/utils/route'
+import { filterRouters, menuList } from '@/utils/route'
 
 const router = useRouter()
 const routes = computed(() => {
   const filterRoutes = filterRouters(router.getRoutes())
-  return generateMenus(filterRoutes)
+  return menuList(filterRoutes)
 })
 
-// 计算高亮 menu 的方法
 const route = useRoute()
 const activeMenu = computed(() => {
   const { path } = route
   return path
 })
-console.log(JSON.stringify(routes.value))
 </script>
 
 <style lang="scss" scoped></style>
