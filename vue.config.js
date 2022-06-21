@@ -8,16 +8,25 @@ module.exports = defineConfig({
     proxy: {
       '/api': {
         target: 'https://api.imooc-admin.lgdsunday.club/',
-        changeOrigin: true,
+        changeOrigin: true
       }
     }
   },
-  chainWebpack (config) {
+  configureWebpack() {
+    return {
+      resolve: {
+        alias: {
+          "@": resolve("src"),
+        },
+        fallback: {
+          path: require.resolve("path-browserify"),
+        },
+      },
+    }
+  },
+  chainWebpack(config) {
     // 设置 svg-sprite-loader
-    config.module
-      .rule('svg')
-      .exclude.add(resolve('src/icons'))
-      .end()
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
     config.module
       .rule('icons')
       .test(/\.svg$/)

@@ -1,5 +1,5 @@
 <template>
-  <div class="">{组件名}</div>
+  <div class="">401</div>
 </template>
 
 <script setup>

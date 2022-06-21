@@ -34,7 +34,7 @@ export default {
         })
           .then(res => {
             setTimeStamp()
-            commit('setToken', res.data.data.token)
+            commit('setToken', res.data.token)
             resolve(res)
           })
           .catch(err => {
@@ -44,7 +44,7 @@ export default {
     },
     async getUserInfo({ commit }) {
       const res = await getUserInfo()
-      commit('setUserInfo', res.data.data)
+      commit('setUserInfo', res.data)
       return res
     }
   }

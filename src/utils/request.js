@@ -34,7 +34,10 @@ service.interceptors.request.use(
 
 // 相应拦截器
 service.interceptors.response.use(
-  () => {},
+  (response) => {
+    const { data } = response
+    return data
+  },
   error => {
     // 用户被动退出被动处理： token过期、单点登录
     if (error.response?.data?.code === 401) {
