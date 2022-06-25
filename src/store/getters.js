@@ -4,5 +4,6 @@ export default {
   userInfo: state => state.user.userInfo,
   hasUserInfo: state => JSON.stringify(state.user.userInfo) !== '{}',
   variables: () => variables,
-  sidebarOpened: state => state.app.sidebarOpened
+  sidebarOpened: state => state.app.sidebarOpened,
+  tagsViewList: state => state.tags.tagsViewList
 }
