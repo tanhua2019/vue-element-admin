@@ -5,7 +5,7 @@ import { isTimeOut } from '@/utils/loginTime'
 import { ElMessage } from 'element-plus'
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: '',
   timeout: 5000
 })
 

@@ -5,7 +5,7 @@ import request from '@/utils/request'
  */
 export const login = data => {
   return request({
-    url: '/sys/login',
+    url: '/api/sys/login',
     method: 'POST',
     data
   })
@@ -16,6 +16,16 @@ export const login = data => {
  */
  export const getUserInfo = () => {
   return request({
-    url: '/sys/profile'
+    url: '/api/sys/profile'
+  })
+}
+
+/**
+ * 获取图片数据列表
+ */
+export const getPexelsList = (data) => {
+  return request({
+    url: '/font/pexels/list',
+    params: data
   })
 }

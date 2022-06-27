@@ -9,6 +9,13 @@ module.exports = defineConfig({
       '/api': {
         target: 'https://api.imooc-admin.lgdsunday.club/',
         changeOrigin: true
+      },
+      '/font': {
+        target: 'https://api.imooc-front.lgdsunday.club',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/font': '/api'
+        }
       }
     }
   },
