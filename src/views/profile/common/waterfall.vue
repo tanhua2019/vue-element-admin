@@ -9,6 +9,7 @@
       v-for="(item, index) in list"
       :key="index"
       :style="{
+        width: itemWidth + 'px',
         left: item.style?.left + 'px',
         top: item.style?.top + 'px'
       }"
@@ -45,13 +46,13 @@ const props = defineProps({
 })
 
 const { itemWidth, containerLeft, containerTarget } = useItemWidth(props)
-const { itemHeight, getItemHeight } = useItemHeight()
+const { getItemHeight } = useItemHeight()
 const { useColumnHeight, containerHeight, useItemLocation } = useLayout(
   props,
-  itemHeight,
   itemWidth,
   containerLeft
 )
+
 
 watch(
   () => props.list,
@@ -62,8 +63,8 @@ watch(
       useColumnHeight()
     }
     nextTick(() => {
-      getItemHeight().then(() => {
-        useItemLocation()
+      getItemHeight().then((itemHeight) => {
+        useItemLocation(itemHeight)
       })
     })
   },

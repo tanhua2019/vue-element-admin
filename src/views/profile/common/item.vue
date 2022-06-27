@@ -1,17 +1,20 @@
 <template>
   <div>
-    <img :style="imgStyle" :src="data.photo" />
-    <div class="title">{{ data.title }}</div>
-    <div class="content">
-       <el-avatar :size="30" :src="data.avatar" />
-       <div class="author">{{ data.author }}</div>
-    </div>
+    <img
+      v-lazys
+      style="width: 100%"
+      :style="{
+        height: (width / data.photoWidth) * data.photoHeight + 'px',
+        'background-color': randomRGB()
+      }"
+      :src="data.photo"
+    />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-const props = defineProps({
+import { randomRGB } from './utils'
+defineProps({
   data: {
     type: Object,
     default: () => {}
@@ -21,20 +24,15 @@ const props = defineProps({
     default: 0
   }
 })
-
-const imgStyle = computed(() => {
-  return {
-    'object-fit': 'contain', //保持图片原有比例不缩放
-    width: props.width + 'px'
-  }
-})
 </script>
 
 <style lang="scss" scoped>
 .title {
+  font-size: 13px;
   text-align: center;
 }
 .content {
+  font-size: 13px;
   display: flex;
   justify-content: center;
   align-items: center;

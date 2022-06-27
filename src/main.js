@@ -8,7 +8,7 @@ import 'element-plus/dist/index.css'
 import '@/styles/index.scss'
 import * as EleIcons from '@element-plus/icons-vue'
 import installIcons from '@/icons'
-import LazyLoad from '@/directives/modules/lazy';
+import directives from '@/directives/index';
 
 const app = createApp(App)
 
@@ -19,7 +19,5 @@ for (const [key, component] of Object.entries(EleIcons)) {
 
 // 导入路由鉴权
 import './permission'
-app.use(LazyLoad, {
-  default: 'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7f2421e0269d41299dad3ff4bd0dced9~tplv-k3u1fbpfcp-watermark.image?'
-})
+app.use(directives)
 app.use(ElementPlus).use(store).use(router).mount('#app')
